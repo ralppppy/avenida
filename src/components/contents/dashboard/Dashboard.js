@@ -1,0 +1,160 @@
+import React, { useReducer, useContext } from "react"
+import { useParams, withRouter } from "react-router-dom"
+
+import axios from "axios"
+import DashboardReducer from "./DashboardReducer"
+import { ChartContext } from "../../../context/ChartContext"
+import moment from "moment"
+import _ from "lodash"
+import { saveAs } from "file-saver"
+import { useSpring, animated } from "react-spring"
+import ContentHeader from "../common/ContentHeader"
+import Chart from "../common/Chart"
+import CurrentDate from "../common/CurrentDate"
+import CardFooter from "../common/CardFooter"
+
+const initialState = {
+  chartVisible: false
+}
+
+function Dashboard() {
+  document.title = "Dashboard"
+
+  let { setTopChartVisible, isTopChartVisible } = useContext(ChartContext)
+
+  let [state, dispatch] = useReducer(DashboardReducer, initialState)
+
+  setTopChartVisible(state.chartVisible)
+
+  const animatedProps = useSpring({
+    to: {
+      opacity: 1
+      // marginLeft: 0
+    },
+
+    from: {
+      opacity: 0
+      // marginLeft: -500
+    },
+    delay: 300
+  })
+
+  const buttonClick = e => {
+    e.preventDefault()
+    axios.post("http://localhost:3005/api/pdf/create-pdf-report").then(res => {
+      axios
+        .get("http://localhost:3005/api/pdf/fetch-pdf", {
+          responseType: "blob"
+        })
+        .then(res => {
+          const pdfblob = new Blob([res.data], { type: "application/pdf" })
+          saveAs(pdfblob, "report.pdf")
+        })
+    })
+  }
+
+  const updateValue = e => {
+    e.preventDefault()
+    //data.push(10000)
+    console.log("realy")
+  }
+
+  const handleChartVisibility = e => {
+    e.preventDefault()
+    console.log(state)
+    dispatch({ type: "CHART_VISIBILITY_TOGGLE" })
+  }
+
+  return (
+    <animated.div style={animatedProps}>
+      <div className="content-wrapper">
+        <ContentHeader title="Dashboard" />
+        <section className="content">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="card">
+                  <div className="card-header">
+                    <h5 className="card-title">Water level report</h5>
+
+                    <div className="card-tools">
+                      <button
+                        type="button"
+                        className="btn btn-tool"
+                        data-card-widget="collapse"
+                      >
+                        <i className="fas fa-minus"></i>
+                      </button>
+                      <div className="btn-group">
+                        <button
+                          type="button"
+                          className="btn btn-tool dropdown-toggle"
+                          data-toggle="dropdown"
+                        >
+                          <i className="fas fa-wrench"></i>
+                        </button>
+                        <div
+                          className="dropdown-menu dropdown-menu-right"
+                          role="menu"
+                        >
+                          <a href="#" className="dropdown-item">
+                            Action
+                          </a>
+                          <a href="#" className="dropdown-item">
+                            Another action
+                          </a>
+                          <a href="#" className="dropdown-item">
+                            Something else here
+                          </a>
+                          <a className="dropdown-divider"></a>
+                          <a href="#" className="dropdown-item">
+                            Separated link
+                          </a>
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        className="btn btn-tool"
+                        data-card-widget="remove"
+                      >
+                        <i className="fas fa-times"></i>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-md-12">
+                        {/* <p className="text-center">
+                          <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
+                        </p> */}
+
+                        <div className="chart">
+                          <button
+                            className="btn btn-primary btn-sm"
+                            onClick={e => handleChartVisibility(e)}
+                          >
+                            {isTopChartVisible ? "Hide Filter" : "Show Filter"}
+                          </button>
+
+                          <Chart height={100} />
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+
+                    <CurrentDate />
+                  </div>
+                  <CardFooter />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      {/*  */}
+    </animated.div>
+  )
+}
+
+export default withRouter(Dashboard)
