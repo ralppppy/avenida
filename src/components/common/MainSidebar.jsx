@@ -29,7 +29,7 @@ function MainSidebar() {
             </div>
             <div className="info">
               <a href="#" className="d-block">
-                Alexander Pierce
+                Avenida Admin
               </a>
             </div>
           </div>

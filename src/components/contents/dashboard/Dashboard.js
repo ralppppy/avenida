@@ -12,6 +12,7 @@ import ContentHeader from "../common/ContentHeader"
 import Chart from "../common/Chart"
 import CurrentDate from "../common/CurrentDate"
 import CardFooter from "../common/CardFooter"
+import { Switch } from "antd"
 
 const initialState = {
   chartVisible: false
@@ -20,7 +21,12 @@ const initialState = {
 function Dashboard() {
   document.title = "Dashboard"
 
-  let { setTopChartVisible, isTopChartVisible } = useContext(ChartContext)
+  let {
+    setTopChartVisible,
+    isTopChartVisible,
+    measurement,
+    setMesurement
+  } = useContext(ChartContext)
 
   let [state, dispatch] = useReducer(DashboardReducer, initialState)
 
@@ -63,6 +69,16 @@ function Dashboard() {
     e.preventDefault()
     console.log(state)
     dispatch({ type: "CHART_VISIBILITY_TOGGLE" })
+  }
+
+  const changeDataShown = checked => {
+    if (checked) {
+      setMesurement("meter")
+      localStorage.setItem("measurement", "meter")
+    } else {
+      localStorage.setItem("measurement", "feet")
+      setMesurement("feet")
+    }
   }
 
   return (
@@ -136,6 +152,22 @@ function Dashboard() {
                           >
                             {isTopChartVisible ? "Hide Filter" : "Show Filter"}
                           </button>
+                          <hr />
+
+                          <Switch
+                            defaultChecked={
+                              localStorage.getItem("measurement") === "meter"
+                                ? true
+                                : false
+                            }
+                            onChange={checked => changeDataShown(checked)}
+                          />
+                          <p>
+                            Showing data in{" "}
+                            {localStorage.getItem("measurement") == "meter"
+                              ? measurement
+                              : measurement}
+                          </p>
 
                           <Chart height={100} />
                         </div>

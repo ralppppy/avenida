@@ -17,6 +17,7 @@ import "admin-lte/plugins/jquery-mapael/maps/usa_states.min.js"
 import "admin-lte/plugins/chart.js/Chart.min.js"
 import "admin-lte/dist/js/pages/dashboard2.js"
 import "admin-lte/dist/js/demo.js"
+import "antd/dist/antd.css"
 let jQuery = require("admin-lte/plugins/jquery/jquery.js")
 ReactDOM.render(
   <AuthContextPrivider>

@@ -19,6 +19,11 @@ export const ChartContextProvider = ({ children }) => {
   let [ToMinute, setToMinute] = useState("59")
   let [ToSecond, setToSecond] = useState("59")
   let [isTopChartVisible, setTopChartVisible] = useState(false)
+  let [measurement, setMesurement] = useState(
+    localStorage.getItem("measurement")
+      ? localStorage.getItem("measurement")
+      : "meter"
+  )
 
   return (
     <ChartContext.Provider
@@ -50,7 +55,9 @@ export const ChartContextProvider = ({ children }) => {
         ToSecond,
         setToSecond,
         isTopChartVisible,
-        setTopChartVisible
+        setTopChartVisible,
+        measurement,
+        setMesurement
       }}
     >
       {children}

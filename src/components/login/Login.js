@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useContext } from "react"
+import React, { useReducer, useState, useContext } from "react"
 import axios from "axios"
 import LoginReducer from "./LoginReducer"
 import { AuthContext } from "../../context/AuthContext"
@@ -29,6 +29,7 @@ function Login({ history }) {
   let [state, dispatch] = useReducer(LoginReducer, initialState)
 
   let { Authorize } = useContext(AuthContext)
+  let [error, setError] = useState("")
 
   const handleSubmit = async e => {
     e.preventDefault()
@@ -39,7 +40,7 @@ function Login({ history }) {
     if (isAuthorize) {
       history.push("/admin")
     } else {
-      console.log(message)
+      setError(message[0])
     }
   }
 
@@ -58,7 +59,7 @@ function Login({ history }) {
                 <p className="login-box-msg">
                   Sign in to start monitoring water level
                 </p>
-
+                <p className="text-danger">{error}</p>
                 <form action="../../index3.html" method="post">
                   <label htmlFor="username">Username</label>
                   <div className="input-group mb-3">

@@ -39,7 +39,7 @@ function TopChart({ filterData, optionsData, handleFilter }) {
 
   return (
     <>
-      <animated.div style={animatedProps} className="col-md-8">
+      <animated.div style={animatedProps} className="col-md-9">
         <div className="row">
           <Filter
             title={"From"}
@@ -58,7 +58,7 @@ function TopChart({ filterData, optionsData, handleFilter }) {
           />
         </div>
       </animated.div>
-      <animated.div style={animatedProps} className="col-md-4">
+      <animated.div style={animatedProps} className="col-md-3">
         <div className="card " style={{ width: "90%", height: "100%" }}>
           <div className="card-body">
             <p className="card-text font-weight-bold">Will show data from</p>

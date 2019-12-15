@@ -43,7 +43,9 @@ function Chart({ height, width }) {
     ToHour,
     ToMinute,
     ToSecond,
-    isTopChartVisible
+    isTopChartVisible,
+    measurement,
+    setMesurement
   } = useContext(ChartContext)
   const MONTH = [
     "January",
@@ -196,14 +198,22 @@ function Chart({ height, width }) {
   })
 
   const firebaseConfig = {
-    apiKey: "AIzaSyCtSPKJnTHKGGAEQ_WOtmq-rKgpY2u2k7Y",
-    authDomain: "gram-1d8ec.firebaseapp.com",
-    databaseURL: "https://gram-1d8ec.firebaseio.com",
-    projectId: "gram-1d8ec",
-    storageBucket: "gram-1d8ec.appspot.com",
-    messagingSenderId: "266406466814",
-    appId: "1:266406466814:web:0491f01247c335c14f41af",
-    measurementId: "G-1T1STSK4GV"
+    apiKey: "AIzaSyCijvVtGg4BFwXoC7jnbO9L4ChO4ivqgRA",
+    authDomain: "avenida-1495f.firebaseapp.com",
+    databaseURL: "https://avenida-1495f.firebaseio.com",
+    projectId: "avenida-1495f",
+    storageBucket: "avenida-1495f.appspot.com",
+    messagingSenderId: "434841626247",
+    appId: "1:434841626247:web:9605cee1aeb8dd46f6fa22",
+    measurementId: "G-51EG3HD37Y"
+    // apiKey: "AIzaSyCtSPKJnTHKGGAEQ_WOtmq-rKgpY2u2k7Y",
+    // authDomain: "gram-1d8ec.firebaseapp.com",
+    // databaseURL: "https://gram-1d8ec.firebaseio.com",
+    // projectId: "gram-1d8ec",
+    // storageBucket: "gram-1d8ec.appspot.com",
+    // messagingSenderId: "266406466814",
+    // appId: "1:266406466814:web:0491f01247c335c14f41af",
+    // measurementId: "G-1T1STSK4GV"
   }
 
   useEffect(() => {
@@ -223,13 +233,21 @@ function Chart({ height, width }) {
       .child("water-level")
       .child("meter")
       .on("value", snap => {
+        console.log(snap)
         snap.forEach(child => {
+          // console.log(child.val())
           if (
             parseInt(child.key) >= parseInt(fromUnix) &&
             parseInt(child.key) <= parseInt(toUnix)
           ) {
             let newDate = moment.unix(child.key).format("MMM  DD, hh:mm:ss A")
-            wlmeter.push(child.val())
+            if (measurement === "meter") {
+              wlmeter.push(child.val())
+            } else {
+              wlmeter.push(
+                parseInt(numeral(child.val() * 3.28084).format("0.00"))
+              )
+            }
             date.push(newDate)
             aveWlMeter = _.sum(wlmeter)
             setWlEveMeter(numeral(aveWlMeter / wlmeter.length).format("0.00"))
@@ -246,7 +264,7 @@ function Chart({ height, width }) {
         date = []
         aveWlMeter = 0
       })
-  }, [fromUnix, toUnix])
+  }, [fromUnix, toUnix, measurement])
 
   const handleFilter = e => {
     e.preventDefault()
@@ -318,7 +336,14 @@ function Chart({ height, width }) {
                 ticks: {
                   // Include a dollar sign in the ticks
                   callback: function(value, index, values) {
-                    return value + " meter"
+                    let m = ""
+                    if (measurement == "meter") {
+                      m = " meter"
+                    } else {
+                      m = " feet"
+                    }
+
+                    return value + m
                   }
                 }
               }

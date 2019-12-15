@@ -7,7 +7,7 @@ export const AuthContextPrivider = ({ children }) => {
   let [token, setToken] = useState("")
 
   const Authorize = async (username, password, cb) => {
-    let resp = await axios.post("http://localhost:3005/api/post/login", {
+    let resp = await axios.post("/api/post/login", {
       username,
       password
     })

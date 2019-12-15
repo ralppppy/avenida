@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import React, { useEffect, useState } from "react"
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 
-import "./clientstyle.css";
-import firebase from "firebase/app";
-import database from "firebase/database";
+import "./clientstyle.css"
+import firebase from "firebase/app"
+import database from "firebase/database"
 
-import CardFooter from "../common/CardFooter";
-import { ChartContext } from "../../../context/ChartContext";
+import CardFooter from "../common/CardFooter"
+import { ChartContext } from "../../../context/ChartContext"
 
 const ClientModal = ({ isOpen, toggle, from }) => {
-  let [waterLevel, setWaterLevel] = useState(0);
-  let [color, setColor] = useState("");
-  let [textColor, setTextColor] = useState("");
+  let [waterLevel, setWaterLevel] = useState(0)
+  let [color, setColor] = useState("")
+  let [textColor, setTextColor] = useState("")
 
   const firebaseConfig = {
     apiKey: "AIzaSyCijvVtGg4BFwXoC7jnbO9L4ChO4ivqgRA",
@@ -30,16 +30,16 @@ const ClientModal = ({ isOpen, toggle, from }) => {
     // messagingSenderId: "266406466814",
     // appId: "1:266406466814:web:0491f01247c335c14f41af",
     // measurementId: "G-1T1STSK4GV"
-  };
+  }
 
   useEffect(() => {
     // Initialize Firebase
     if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
+      firebase.initializeApp(firebaseConfig)
       // firebase.analytics()
     }
 
-    const database = firebase.database().ref("avenida");
+    const database = firebase.database().ref("avenida")
 
     database
       .child("water-level")
@@ -49,24 +49,24 @@ const ClientModal = ({ isOpen, toggle, from }) => {
         //     snap.forEach(child => {
 
         //   })
-        let key = Object.values(snap.val());
-        console.log(key[0]);
-        setWaterLevel(key[0]);
+        let key = Object.values(snap.val())
+        console.log(key[0])
+        setWaterLevel(key[0])
         if (key[0] <= 60.96) {
-          console.log(1);
-          setColor("#f2d600");
-          setTextColor("rgba(0,0,0,.65)");
+          console.log(1)
+          setColor("#f2d600")
+          setTextColor("rgba(0,0,0,.65)")
         } else if (key[0] > 60.96 && key[0] <= 121.92) {
-          console.log(2);
-          setColor("#ff9f1a");
-          setTextColor("rgba(0,0,0,.65)");
+          console.log(2)
+          setColor("#ff9f1a")
+          setTextColor("rgba(0,0,0,.65)")
         } else if (key[0] > 121.92) {
-          console.log(3);
-          setColor("#eb5a46");
-          setTextColor("rgba(255,255,255,.87)");
+          console.log(3)
+          setColor("#eb5a46")
+          setTextColor("rgba(255,255,255,.87)")
         }
-      });
-  }, []);
+      })
+  }, [])
 
   return (
     <div>
@@ -155,7 +155,7 @@ const ClientModal = ({ isOpen, toggle, from }) => {
         </ModalFooter>
       </Modal>
     </div>
-  );
-};
+  )
+}
 
-export default ClientModal;
+export default ClientModal

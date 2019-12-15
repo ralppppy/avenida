@@ -33,7 +33,7 @@ function ManageUser() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3005/api/get/users")
+      .get("/api/get/users")
       .then(users => {
         dispatch({ type: "GET_USERS", users: users.data })
       })
@@ -52,7 +52,7 @@ function ManageUser() {
                 <div className="card">
                   <div className="row">
                     <div className="col-md-3">
-                      <Link to="/add-user">
+                      <Link to="#">
                         <button className="btn btn-primary m-2">
                           Add User
                         </button>
@@ -61,7 +61,7 @@ function ManageUser() {
                   </div>
 
                   <div className="card-header">
-                    <h3 className="card-title">Fixed Header Table</h3>
+                    <h3 className="card-title">Under Construction...</h3>
 
                     <div className="card-tools">
                       <div
