@@ -1,6 +1,27 @@
 import React, { useContext } from "react"
 import { ChartContext } from "../../../context/ChartContext"
 
+/*
+This is the component filter. It will filter the data that will be shown in the chart
+
+setFromYear,
+setFromMonth,
+setFromDay,
+setFromHour,
+setFromMinute,
+setFromSecond,
+-> this Variables is for the date "from" which means the start date
+
+setToYear,
+setToMonth,
+setToDay,
+setToHour,
+setToMinute,
+setToSecond
+-> this Variables is for the date "to" which means the end date
+
+---*/
+
 function Filter({ MONTH, DAY, HOUR, secMin, title }) {
   let {
     setFromYear,
@@ -83,16 +104,17 @@ function Filter({ MONTH, DAY, HOUR, secMin, title }) {
       <div className="col-md-2">
         <label>{title} Month</label>
         <select
-          // style={{ paddingRight: 3, paddingLeft: 6 }}
           onChange={e => handleChange(e)}
           className="form-control  input-sm"
           name={`${title}Month`}
         >
+          {/* looping the MONTH variable */}
           {MONTH.map((m, i) => (
             <option value={m} key={i}>
               {m}
             </option>
           ))}
+          {/* ---END--- */}
         </select>
       </div>
       <div className="col-md-2">
@@ -102,11 +124,14 @@ function Filter({ MONTH, DAY, HOUR, secMin, title }) {
           className="form-control  input-sm"
           name={`${title}Day`}
         >
+          {/* looping the DAY variable */}
+
           {DAY.map((m, i) => (
             <option value={m} key={i}>
               {m}
             </option>
           ))}
+          {/* ---END--- */}
         </select>
       </div>
       <div className="col-md-2">
@@ -117,9 +142,11 @@ function Filter({ MONTH, DAY, HOUR, secMin, title }) {
           onChange={e => handleChange(e)}
           className="form-control  input-sm"
         >
+          {/* looping the HOUR variable */}
           {HOUR.map((h, i) => (
             <option key={i}>{h}</option>
           ))}
+          {/* ---END--- */}
         </select>
       </div>
       <div className="col-md-2">
@@ -144,9 +171,11 @@ function Filter({ MONTH, DAY, HOUR, secMin, title }) {
           onChange={e => handleChange(e)}
           className="form-control  input-sm"
         >
+          {/* looping the secMin variable */}
           {secMin.map((s, i) => (
             <option key={i}>{s}</option>
           ))}
+          {/* ---END--- */}
         </select>
       </div>
     </>

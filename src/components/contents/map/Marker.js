@@ -9,6 +9,7 @@ function Marker({ handleMarkerClick }) {
 
   let [image, setImage] = useState("./img/marker_normal.png")
 
+  // Config For firebase
   const firebaseConfig = {
     apiKey: "AIzaSyCijvVtGg4BFwXoC7jnbO9L4ChO4ivqgRA",
     authDomain: "avenida-1495f.firebaseapp.com",
@@ -18,15 +19,8 @@ function Marker({ handleMarkerClick }) {
     messagingSenderId: "434841626247",
     appId: "1:434841626247:web:9605cee1aeb8dd46f6fa22",
     measurementId: "G-51EG3HD37Y"
-    // apiKey: "AIzaSyCtSPKJnTHKGGAEQ_WOtmq-rKgpY2u2k7Y",
-    // authDomain: "gram-1d8ec.firebaseapp.com",
-    // databaseURL: "https://gram-1d8ec.firebaseio.com",
-    // projectId: "gram-1d8ec",
-    // storageBucket: "gram-1d8ec.appspot.com",
-    // messagingSenderId: "266406466814",
-    // appId: "1:266406466814:web:0491f01247c335c14f41af",
-    // measurementId: "G-1T1STSK4GV"
   }
+  // ---END---
 
   useEffect(() => {
     // Initialize Firebase
@@ -37,22 +31,28 @@ function Marker({ handleMarkerClick }) {
 
     const database = firebase.database().ref("avenida")
 
+    //QUery in firebase database to get the latest water level
     database
       .child("water-level")
       .child("meter")
       .limitToLast(1)
       .on("value", snap => {
-        //     snap.forEach(child => {
-
-        //   })
         let key = Object.values(snap.val())
-        console.log(key[0])
+
+        //The variable key[0] is the current water level
+
+        //if else logic---
+
+        //if the current water level is less than or equal to 60.96
+        //change the marker image to marker_normal.png -- normal water level
+        //else if the current water level is greater than 60.96 and less than or equal to 121.92
+        //change the marker image to marker_average.png --average water level
+        //else if the current water level is greater than 121.92
+        //change the marker image to marker.png -- critical water level
 
         if (key[0] <= 60.96) {
-          console.log(1)
           setImage("./img/marker_normal.png")
         } else if (key[0] > 60.96 && key[0] <= 121.92) {
-          console.log(2)
           setImage("./img/marker_average.png")
         } else if (key[0] > 121.92) {
           setImage("./img/marker.png")
@@ -65,13 +65,11 @@ function Marker({ handleMarkerClick }) {
       to: {
         width: width,
         height: height
-        // marginLeft: 0
       },
 
       from: {
         width: 30,
         height: 30
-        // marginLeft: -500
       },
       delay: 100
     })
@@ -101,7 +99,6 @@ function Marker({ handleMarkerClick }) {
         onMouseOver={() => handleMouseOver()}
         onMouseOut={() => handleMouseOut()}
         onClick={() => handleMarkerClick()}
-        //  src={require("./img/marker.png")}
         src={require(`${image}`)}
       />
     </>

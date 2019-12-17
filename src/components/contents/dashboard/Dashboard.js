@@ -67,7 +67,6 @@ function Dashboard() {
 
   const handleChartVisibility = e => {
     e.preventDefault()
-    console.log(state)
     dispatch({ type: "CHART_VISIBILITY_TOGGLE" })
   }
 
@@ -84,7 +83,10 @@ function Dashboard() {
   return (
     <animated.div style={animatedProps}>
       <div className="content-wrapper">
+        {/* Add Content header component -- Located at  src/components/contents/common/ContentHeader.js */}
         <ContentHeader title="Dashboard" />
+        {/* Add Content header component -- Located at  src/components/contents/common/ContentHeader.js */}
+
         <section className="content">
           <div className="container-fluid">
             <div className="row">
@@ -141,19 +143,23 @@ function Dashboard() {
                   <div className="card-body">
                     <div className="row">
                       <div className="col-md-12">
-                        {/* <p className="text-center">
-                          <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
-                        </p> */}
-
                         <div className="chart">
+                          {/* This Button will toggle the visibility of Chart Filter in every Click 
+                              handleChartVisibility function is located at the top
+                          */}
                           <button
                             className="btn btn-primary btn-sm"
                             onClick={e => handleChartVisibility(e)}
                           >
                             {isTopChartVisible ? "Hide Filter" : "Show Filter"}
                           </button>
+                          {/* ---END___*/}
+
                           <hr />
 
+                          {/* 1: This Line is a switch that will change the measurement from meter to feet
+                              and vice versa
+                          */}
                           <Switch
                             defaultChecked={
                               localStorage.getItem("measurement") === "meter"
@@ -162,22 +168,44 @@ function Dashboard() {
                             }
                             onChange={checked => changeDataShown(checked)}
                           />
+                          {/* 2: This line of codes outputs "Showing data in meter / Showing data in feet 
+                              depending on the state of the Switch
+                          " */}
                           <p>
                             Showing data in{" "}
                             {localStorage.getItem("measurement") == "meter"
                               ? measurement
                               : measurement}
                           </p>
+                          {/* ---END 2:--- */}
+                          {/* ---END 1:--- */}
 
+                          {/* This Line is to Add the Chart Component which will show a line graph 
+                          thats represents the changes in water level.
+                            This component is located at src/components/contents/common/Chart.js
+                          */}
                           <Chart height={100} />
+                          {/* ---END--- */}
                         </div>
                       </div>
                     </div>
                     <br />
 
+                    {/* This Line will add the CurrentDate Component. 
+                        The current date Component will show the current date.
+                        located at src/components/contents/common/CurrentDate.js
+                    */}
                     <CurrentDate />
+                    {/* ---END--- */}
                   </div>
+
+                  {/* This Line will add the CardFooter Component. 
+                        The CardFooter Component will show the Average Water Level
+                        that is currently shown in the chart.
+                        located at src/components/contents/common/CardFooter.js
+                    */}
                   <CardFooter />
+                  {/* ---END--- */}
                 </div>
               </div>
             </div>

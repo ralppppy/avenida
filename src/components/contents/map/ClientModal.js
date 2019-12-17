@@ -22,16 +22,10 @@ const ClientModal = ({ isOpen, toggle, from }) => {
     messagingSenderId: "434841626247",
     appId: "1:434841626247:web:9605cee1aeb8dd46f6fa22",
     measurementId: "G-51EG3HD37Y"
-    // apiKey: "AIzaSyCtSPKJnTHKGGAEQ_WOtmq-rKgpY2u2k7Y",
-    // authDomain: "gram-1d8ec.firebaseapp.com",
-    // databaseURL: "https://gram-1d8ec.firebaseio.com",
-    // projectId: "gram-1d8ec",
-    // storageBucket: "gram-1d8ec.appspot.com",
-    // messagingSenderId: "266406466814",
-    // appId: "1:266406466814:web:0491f01247c335c14f41af",
-    // measurementId: "G-1T1STSK4GV"
   }
 
+  //The use effect function will run every time this component (ClientModal) will be called
+  //or shown or mounted. Every time this component is show we are fetching data from database
   useEffect(() => {
     // Initialize Firebase
     if (!firebase.apps.length) {
@@ -46,22 +40,24 @@ const ClientModal = ({ isOpen, toggle, from }) => {
       .child("meter")
       .limitToLast(1)
       .on("value", snap => {
-        //     snap.forEach(child => {
-
-        //   })
         let key = Object.values(snap.val())
-        console.log(key[0])
+
+        //The variable key[0] is the current water level
+
+        //if the current water level is less than or equal to 60.96
+        //change the background color to #f2d600 and text color to  rgba(0,0,0,.65)-- normal water level
+        //else if the current water level is greater than 60.96 and less than or equal to 121.92
+        //change the background color to #ff9f1a and text color to  rgba(0,0,0,.65) --average water level
+        //else if the current water level is greater than 121.92
+        //change the background color to #eb5a46 and text color to  rgba(255,255,255,.87) -- critical water level
         setWaterLevel(key[0])
         if (key[0] <= 60.96) {
-          console.log(1)
           setColor("#f2d600")
           setTextColor("rgba(0,0,0,.65)")
         } else if (key[0] > 60.96 && key[0] <= 121.92) {
-          console.log(2)
           setColor("#ff9f1a")
           setTextColor("rgba(0,0,0,.65)")
         } else if (key[0] > 121.92) {
-          console.log(3)
           setColor("#eb5a46")
           setTextColor("rgba(255,255,255,.87)")
         }
@@ -84,14 +80,17 @@ const ClientModal = ({ isOpen, toggle, from }) => {
                       borderRadius: 5
                     }}
                   >
+                    {/* This line of codes will show the current water level in meters 
+                        This will be shown in the client side
+                        output sample "100 meters"
+                        The waterLevel variable inside the {} is a dynamic value that we've fetch from the firebase
+                        database. (Fetch function is located at the top in useEffect())
+                    */}
                     <p
                       className="card-text font-weight-bold"
                       style={{ fontSize: 30, color: textColor }}
                     >
                       {waterLevel} meters
-                      {/* {waterLevel <= 3 && "LOW LEVEL"}
-                      {waterLevel > 3 && waterLevel <= 6 && "AVERAGE LEVEL"}
-                      {waterLevel > 6 && "CRITICAL LEVEL"} */}
                     </p>
                   </div>
                 </div>

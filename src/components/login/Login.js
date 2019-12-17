@@ -40,7 +40,7 @@ function Login({ history }) {
     if (isAuthorize) {
       history.push("/admin")
     } else {
-      setError(message[0])
+      setError(message)
     }
   }
 

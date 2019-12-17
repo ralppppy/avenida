@@ -7,17 +7,13 @@ import MainMap from "./MainMap"
 function Map(props) {
   document.title = "Map"
 
-  console.log(props.from)
-
   const animatedProps = useSpring({
     to: {
       opacity: 1
-      // marginLeft: 0
     },
 
     from: {
       opacity: 0
-      // marginLeft: -500
     },
     delay: 300
   })
@@ -27,9 +23,17 @@ function Map(props) {
       <div
         className={typeof props.from == "undefined" ? "content-wrapper" : ""}
       >
+        {/* Add Content Header Component*/}
         <ContentHeader title="Map" />
+        {/* ---END--- */}
 
+        {/* Add MainMap Component 
+          MainMap Component will show the a Map that has a marker that
+           shows the river locaition
+           file location is in src/components/contents/map/MainMap.js
+        */}
         <MainMap height="65vh" />
+        {/* ---END--- */}
       </div>
     </animated.div>
   )

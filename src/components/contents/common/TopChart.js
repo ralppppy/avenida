@@ -4,6 +4,26 @@ import { animated, useSpring } from "react-spring"
 import { ChartContext } from "../../../context/ChartContext"
 import moment from "moment"
 
+/*
+This component will show all the values chosen in Filter component
+
+values ->
+setFromYear,
+setFromMonth,
+setFromDay,
+setFromHour,
+setFromMinute,
+setFromSecond,
+setToYear,
+setToMonth,
+setToDay,
+setToHour,
+setToMinute,
+setToSecond
+
+When the Okay button is click the firebase database query will trigger
+---*/
+
 function TopChart({ filterData, optionsData, handleFilter }) {
   let {
     FromYear,
@@ -27,12 +47,10 @@ function TopChart({ filterData, optionsData, handleFilter }) {
   const animatedProps = useSpring({
     to: {
       opacity: 1
-      // marginLeft: 0
     },
 
     from: {
       opacity: 0
-      // marginLeft: -500
     },
     delay: 300
   })

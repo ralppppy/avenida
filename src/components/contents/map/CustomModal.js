@@ -6,6 +6,8 @@ import CurrentDate from "../common/CurrentDate"
 import CardFooter from "../common/CardFooter"
 import { ChartContext } from "../../../context/ChartContext"
 
+//Currently we are not using this.
+
 const CustomModal = ({ isOpen, toggle, from }) => {
   let { setTopChartVisible, isTopChartVisible } = useContext(ChartContext)
 
@@ -31,9 +33,7 @@ const CustomModal = ({ isOpen, toggle, from }) => {
       >
         <ModalHeader toggle={toggle}>Water level report</ModalHeader>
         <ModalBody
-        // style={{
 
-        // }}
         >
           {from == "" ? (
             <>

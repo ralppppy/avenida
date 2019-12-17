@@ -206,14 +206,6 @@ function Chart({ height, width }) {
     messagingSenderId: "434841626247",
     appId: "1:434841626247:web:9605cee1aeb8dd46f6fa22",
     measurementId: "G-51EG3HD37Y"
-    // apiKey: "AIzaSyCtSPKJnTHKGGAEQ_WOtmq-rKgpY2u2k7Y",
-    // authDomain: "gram-1d8ec.firebaseapp.com",
-    // databaseURL: "https://gram-1d8ec.firebaseio.com",
-    // projectId: "gram-1d8ec",
-    // storageBucket: "gram-1d8ec.appspot.com",
-    // messagingSenderId: "266406466814",
-    // appId: "1:266406466814:web:0491f01247c335c14f41af",
-    // measurementId: "G-1T1STSK4GV"
   }
 
   useEffect(() => {
@@ -233,9 +225,30 @@ function Chart({ height, width }) {
       .child("water-level")
       .child("meter")
       .on("value", snap => {
-        console.log(snap)
         snap.forEach(child => {
-          // console.log(child.val())
+          /*
+          child.key is the key from the database this key is in unix timestamp
+
+          The default value of fromUnix when not using the filter--
+          fromUnix is a unix timestamp 5 days ago from this current time
+          The default value of fromUnix is initialize above inside initialState variable
+
+          The default value of toUnix when not using the filter--
+          toUnix is the current time
+          The default value of toUnix is initialize above inside initialState variable
+
+
+          fromUnix and toUnix will change its value when using the filter component
+
+          --- if statement logic ---
+          if child.key greater than or equal to fromUnix and less than or equal to toUnix
+          if the value of fromUnix and toUnix is defaul we are only getting the water level
+          data 5 days ago until now, and if the two variable is not default it will depend on
+          what time the user will set on the filter component
+
+          Filter component is located at src/components/contents/common/Filter.js
+          ---*/
+
           if (
             parseInt(child.key) >= parseInt(fromUnix) &&
             parseInt(child.key) <= parseInt(toUnix)
@@ -277,7 +290,6 @@ function Chart({ height, width }) {
     let toUnix = moment(
       `${ToMonth} ${ToDay} ${ToYear} ${ToHour}:${ToMinute}:${ToSecond} GMT+0800`
     ).unix()
-    console.log(toUnix)
     dispatch({ type: "FILTER", fromUnix, toUnix })
   }
 
@@ -305,6 +317,9 @@ function Chart({ height, width }) {
           />
         )}
       </div>
+
+      {/* This line of code will show the Line graph with data gatherd 
+      from the database.*/}
       <Line
         height={height}
         width={width}
@@ -351,6 +366,7 @@ function Chart({ height, width }) {
           }
         }}
       />
+      {/* ---END--- */}
     </animated.div>
   )
 }

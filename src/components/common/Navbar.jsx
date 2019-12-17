@@ -6,8 +6,7 @@ function Navbar({ history }) {
   let { token, setToken } = useContext(AuthContext)
 
   const handleLogout = e => {
-    window.localStorage.clear()
-    console.log(token)
+    window.localStorage.removeItem("TOKEN")
     setToken("")
     history.push("/admin/login")
     //  window.location.href = "/login"
@@ -25,11 +24,6 @@ function Navbar({ history }) {
           <li className="nav-item d-none d-sm-inline-block">
             <a href="index3.html" className="nav-link">
               Home
-            </a>
-          </li>
-          <li className="nav-item d-none d-sm-inline-block">
-            <a href="#" className="nav-link">
-              Contact
             </a>
           </li>
         </ul>
