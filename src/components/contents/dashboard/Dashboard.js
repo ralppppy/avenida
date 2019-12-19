@@ -12,7 +12,7 @@ import ContentHeader from "../common/ContentHeader"
 import Chart from "../common/Chart"
 import CurrentDate from "../common/CurrentDate"
 import CardFooter from "../common/CardFooter"
-import { Switch } from "antd"
+import { Switch, Button, message } from "antd"
 
 const initialState = {
   chartVisible: false
