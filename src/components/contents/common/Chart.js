@@ -215,6 +215,8 @@ function Chart({ height, width }) {
       // firebase.analytics()
     }
 
+    console.log("Run ulit")
+
     let wlmeter = []
     let date = []
     let aveWlMeter = 0
@@ -253,7 +255,9 @@ function Chart({ height, width }) {
             parseInt(child.key) >= parseInt(fromUnix) &&
             parseInt(child.key) <= parseInt(toUnix)
           ) {
-            let newDate = moment.unix(child.key).format("MMM  DD, hh:mm:ss A")
+            let newDate = moment
+              .unix(child.key)
+              .format("MMM DD YYYY, hh:mm:ss A")
             if (measurement === "meter") {
               wlmeter.push(child.val())
             } else {
@@ -269,6 +273,11 @@ function Chart({ height, width }) {
               datas: { wlmeter, date, aveWlMeter }
             })
           } else {
+            console.log("naa")
+            dispatch({
+              type: "INSERT_WL_DATA",
+              datas: { wlmeter, date, aveWlMeter }
+            })
             //console.log(fromUnix.toString(), toUnix.toString())
           }
         })
@@ -282,6 +291,10 @@ function Chart({ height, width }) {
   const handleFilter = e => {
     e.preventDefault()
 
+    console.log(
+      `${FromMonth} ${FromDay} ${FromYear} ${FromHour}:${FromMinute}:${FromSecond} GMT+0800`,
+      `${ToMonth} ${ToDay} ${ToYear} ${ToHour}:${ToMinute}:${ToSecond} GMT+0800`
+    )
     //"Sat Apr 30 2016 16:59:46 GMT-0500"
     let fromUnix = moment(
       `${FromMonth} ${FromDay} ${FromYear} ${FromHour}:${FromMinute}:${FromSecond} GMT+0800`

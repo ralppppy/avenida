@@ -96,6 +96,7 @@ function Filter({ MONTH, DAY, HOUR, secMin, title }) {
           onChange={e => handleChange(e)}
           className="form-control  input-sm"
         >
+          <option>2020</option>
           <option>2019</option>
           <option>2018</option>
         </select>
