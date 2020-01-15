@@ -18,12 +18,15 @@ import "admin-lte/dist/js/adminlte.js"
 //import "admin-lte/dist/js/pages/dashboard2.js"
 //import "admin-lte/dist/js/demo.js"
 import "antd/dist/antd.css"
+import { DashboardContextProvider } from "./context/DashboardContext"
 let jQuery = require("admin-lte/plugins/jquery/jquery.js")
 ReactDOM.render(
-  <AuthContextPrivider>
-    <App />
-  </AuthContextPrivider>,
-  document.getElementById("root")
+   <AuthContextPrivider>
+      <DashboardContextProvider>
+         <App />
+      </DashboardContextProvider>
+   </AuthContextPrivider>,
+   document.getElementById("root")
 )
 
 // If you want your app to work offline and load faster, you can change
